@@ -1,0 +1,23 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CGHudScript.cs">
+    <Files>
+      <File FileName="Assets\Scripts\CharacterControllerScript.cs" Line="12" Column="28" />
+      <File FileName="Assets\Scripts\ColorUtil.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\FollowCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PaintingController.cs" Line="18" Column="21" />
+      <File FileName="Assets\Scripts\SplatterChecker.cs" Line="14" Column="3" />
+      <File FileName="Assets\Scripts\BucketFill.cs" Line="15" Column="18" />
+      <File FileName="Assets\Scripts\CGHudScript.cs" Line="10" Column="58" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Ethan\Downloads\Chromagravity (2) (1)\Chromagravity\Assets\BucketFill.cs" line="9" column="1" />
+      <Breakpoint file="C:\Users\Ethan\Downloads\Chromagravity (2) (1)\Chromagravity\Assets\BucketFill.cs" line="8" column="1" />
+      <Breakpoint file="C:\Users\Ethan\Downloads\Chromagravity (2) (1)\Chromagravity\Assets\BucketFill.cs" line="10" column="1" />
+      <Breakpoint file="C:\Users\Ethan\Downloads\Chromagravity (2) (1)\Chromagravity\Assets\Scripts\SplatterChecker.cs" line="37" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
