@@ -63,7 +63,7 @@ public class PaintingController : MonoBehaviour {
 		Color[] flatArray = input.GetPixels();
 		Color[,] pixelArray = new Color[input.width, input.height];
 		for (int i = 0; i < flatArray.Length; i++) {
-			pixelArray [i % input.width, i / input.width] = flatArray [i]*255;
+			pixelArray [i % input.width, i / input.width] = flatArray [i];
 		}
 
 		return pixelArray;

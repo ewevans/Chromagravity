@@ -99,9 +99,9 @@ public class CharacterControllerScript : MonoBehaviour {
 			//Debug.Log("hue X: " + (float)Mathf.Cos (hue) + " " + (float)Mathf.Sin (hue));
 			//flipping y axis to fix 
 			if (chroma != 0) {
-				body.AddForce (new Vector2 (((moveX * 1) + ((float)Mathf.Cos (hue)) * 2), ((moveY * 1)) + (-1 * (float)Mathf.Sin (hue)) * 2), ForceMode2D.Impulse);
+				body.AddForce (new Vector2 (((moveX * 2) + ((float)Mathf.Cos (hue)) * 3), ((moveY * 2)) + (-1 * (float)Mathf.Sin (hue)) * 3), ForceMode2D.Impulse);
 			} else {
-				body.AddForce (new Vector2 ((moveX * 1), (moveY * 1)), ForceMode2D.Impulse);
+				body.AddForce (new Vector2 ((moveX * 2), (moveY * 2)), ForceMode2D.Impulse);
 			}
 
 
@@ -133,9 +133,9 @@ public class CharacterControllerScript : MonoBehaviour {
 			Destroy (coll.gameObject);
 			Bucket bucket = coll.gameObject.GetComponent<Bucket> ();
 			bucketAmount += bucket.amount;
+			Color32 color = bucketColor;
 
-
-			bucketColor = ColorUtil.AvgColor (bucketColor, bucket.color);
+			color = ColorUtil.AvgColor (bucketColor, bucket.color);
 		}
 
 		if (coll.gameObject.name == "Door") {

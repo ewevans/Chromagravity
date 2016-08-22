@@ -149,9 +149,9 @@ public static class ColorUtil
 		double x,y,z;
 		Lab lab = new Lab();
 
-		rLinear = (double)rgb.r / 255.0;
-		gLinear = (double)rgb.g / 255.0;
-		bLinear = (double)rgb.b / 255.0;
+		rLinear = (double)rgb.r;
+		gLinear = (double)rgb.g;
+		bLinear = (double)rgb.b;
 
 		double r = (rLinear > 0.04045) ? Math.Pow((rLinear + 0.055) / (
 			1 + 0.055), 2.2) : (rLinear / 12.92);
