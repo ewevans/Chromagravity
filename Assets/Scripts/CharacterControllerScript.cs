@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class CharacterControllerScript : MonoBehaviour {
@@ -10,7 +12,10 @@ public class CharacterControllerScript : MonoBehaviour {
 	Quaternion iniRot;
 	public static List<GameObject> splatters;
 	public CGHudScript CGHud; 
-
+	public int bucketAmount;
+	public Color bucketColor;
+	public GameObject BucketHUD;
+	public GameObject BucketHUDBG;
 
 	// Use this for initialization
 	void Start () {
@@ -23,12 +28,26 @@ public class CharacterControllerScript : MonoBehaviour {
 	void FixedUpdate () {
 	
 		Rigidbody2D body = GetComponent<Rigidbody2D> ();
+		if (Input.GetKeyDown(KeyCode.Space) && bucketAmount > 25)
+		{
+			GameObject splatter = (GameObject)Resources.Load("Splatter");
+			splatter.GetComponent<Splatter> ().color = bucketColor;
 
-		if (!Input.GetKey (KeyCode.Space)) {
+			GameObject splatterObj = (GameObject)Instantiate(splatter);
+			splatterObj.transform.position = this.transform.position;
+			//splatterObj.transform.localScale = new Vector3 (1, 1, 1);
+
+			bucketAmount -= 25;
+				
+		}	
+
+		Color avgRGB = new Color (0, 0, 0);
+
+		if (!Input.GetKey (KeyCode.LeftControl)) {
 			float moveX = Input.GetAxis ("Horizontal");
 			float moveY = Input.GetAxis ("Vertical");
 
-			Color avgRGB = new Color (0, 0, 0);
+
 
 			if (splatters.Count == 0) {
 				//CG force
@@ -45,7 +64,11 @@ public class CharacterControllerScript : MonoBehaviour {
 
 		
 				avgRGB = ColorUtil.ConvertLABtoRGB (avgLab);
-				Debug.Log (avgRGB.r + " " + avgRGB.g + " " + avgRGB.b); 
+				avgRGB.r /= 255f; 
+				avgRGB.g /= 255f; 
+				avgRGB.b /= 255f;
+
+				//Debug.Log (avgRGB.r + " " + avgRGB.g + " " + avgRGB.b); 
 			} else {
 				foreach (GameObject obj in splatters) {
 					Splatter splatter = obj.GetComponent<Splatter> ();
@@ -61,6 +84,10 @@ public class CharacterControllerScript : MonoBehaviour {
 			//Debug.Log (avgRGB.r + " " + avgRGB.g + " " + avgRGB.b);
 			float chroma = 0;
 			float hue = ColorUtil.GetHueLightnessFromRGB (avgRGB, ref chroma);
+			//Debug.Log (chroma);
+
+			CGHud.UpdateCGHud (-1*hue, avgRGB, chroma);
+
 
 			hue = (hue / 180f * Mathf.PI);
 			//Debug.Log (hue);
@@ -68,9 +95,15 @@ public class CharacterControllerScript : MonoBehaviour {
 			//body.AddForce (new Vector2 ((float)Mathf.Cos (hue)*14, (float)Mathf.Sin (hue))*14, ForceMode2D.Force);
 
 			//input force
-			body.AddForce (new Vector2 (((moveX * 3) + ((float)Mathf.Cos (hue)) * 4), ((moveY * 3)) + ((float)Mathf.Sin (hue)) * 4), ForceMode2D.Impulse);
+			//Debug.Log("Move x/y: " + moveX + " " + moveY);
+			//Debug.Log("hue X: " + (float)Mathf.Cos (hue) + " " + (float)Mathf.Sin (hue));
+			//flipping y axis to fix 
+			if (chroma != 0) {
+				body.AddForce (new Vector2 (((moveX * 1) + ((float)Mathf.Cos (hue)) * 2), ((moveY * 1)) + (-1 * (float)Mathf.Sin (hue)) * 2), ForceMode2D.Impulse);
+			} else {
+				body.AddForce (new Vector2 ((moveX * 1), (moveY * 1)), ForceMode2D.Impulse);
+			}
 
-	//		CGHud.UpdateCGHud (0, avgRGB);
 
 
 			if (body.velocity.magnitude > maxSpeed) {
@@ -81,7 +114,7 @@ public class CharacterControllerScript : MonoBehaviour {
 			body.velocity = Vector2.zero;
 		}
 
-	
+		UpdateBucketHUD (avgRGB, bucketAmount);
 		//face direction of moving by rotation
 
 	}
@@ -89,10 +122,26 @@ public class CharacterControllerScript : MonoBehaviour {
 		transform.rotation = iniRot;
 	}
 
+	void UpdateBucketHUD(Color color, int amount){
+		BucketHUD.GetComponent<Image> ().fillAmount = amount / 100f;
+		BucketHUDBG.GetComponent<Image> ().color = bucketColor;
+	}
+
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		if (coll.gameObject.tag == "Bucket") {
 			Destroy (coll.gameObject);
+			Bucket bucket = coll.gameObject.GetComponent<Bucket> ();
+			bucketAmount += bucket.amount;
+
+
+			bucketColor = ColorUtil.AvgColor (bucketColor, bucket.color);
+		}
+
+		if (coll.gameObject.name == "Door") {
+			//end level
+			//Destroy (coll.gameObject);
+			SceneManager.LoadScene(0);
 		}
 	}	
 
