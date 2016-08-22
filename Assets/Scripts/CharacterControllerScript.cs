@@ -28,7 +28,7 @@ public class CharacterControllerScript : MonoBehaviour {
 	void FixedUpdate () {
 	
 		Rigidbody2D body = GetComponent<Rigidbody2D> ();
-		if (Input.GetKeyDown(KeyCode.Space) && bucketAmount > 25)
+		if (Input.GetKeyDown(KeyCode.Space) && bucketAmount >= 25)
 		{
 			GameObject splatter = (GameObject)Resources.Load("Splatter");
 			splatter.GetComponent<Splatter> ().color = bucketColor;
@@ -132,10 +132,15 @@ public class CharacterControllerScript : MonoBehaviour {
 		if (coll.gameObject.tag == "Bucket") {
 			Destroy (coll.gameObject);
 			Bucket bucket = coll.gameObject.GetComponent<Bucket> ();
-			bucketAmount += bucket.amount;
-			Color32 color = bucketColor;
 
-			color = ColorUtil.AvgColor (bucketColor, bucket.color);
+			if (bucketAmount > 0) {
+
+				bucketAmount += bucket.amount;
+				bucketColor = ColorUtil.AvgColor (bucketColor, bucket.color);
+			} else {
+				bucketAmount = 25;
+				bucketColor = bucket.color;
+			}
 		}
 
 		if (coll.gameObject.name == "Door") {
