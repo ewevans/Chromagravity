@@ -28,6 +28,22 @@ public class CharacterControllerScript : MonoBehaviour {
 	void FixedUpdate () {
 	
 		Rigidbody2D body = GetComponent<Rigidbody2D> ();
+		/*
+		 
+	if (Input.touches > 1)
+	{
+	//color wheel
+	}
+	else if (Input1`
+
+
+
+
+
+
+*/
+
+
 		if (Input.GetKeyDown(KeyCode.Space) && bucketAmount >= 25)
 		{
 			GameObject splatter = (GameObject)Resources.Load("Splatter");
@@ -57,7 +73,8 @@ public class CharacterControllerScript : MonoBehaviour {
 				Lab avgLab = new Lab (0, 0, 0);
 				for (int i = (int)CompressedPos.x - 3; i < (int)CompressedPos.x + 3; i++) {
 					for (int j = (int)CompressedPos.y - 3; j < (int)CompressedPos.y + 3; j++) {
-						avgLab += PaintingController.CompressedLabArray [(int)CompressedPos.x + (i - (int)CompressedPos.x), (int)CompressedPos.y + (j - (int)CompressedPos.y)];
+						if (PaintingController.CompressedLabArray.GetLength(0) > ((int)CompressedPos.x + (i - (int)CompressedPos.x)) && PaintingController.CompressedLabArray.GetLength(1)  > ((int)CompressedPos.y + (j - (int)CompressedPos.y)))
+							avgLab += PaintingController.CompressedLabArray [(int)CompressedPos.x + (i - (int)CompressedPos.x), (int)CompressedPos.y + (j - (int)CompressedPos.y)];
 					}
 				}
 				avgLab = avgLab / new Lab (25, 25, 25);

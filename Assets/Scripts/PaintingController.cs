@@ -89,9 +89,9 @@ public class PaintingController : MonoBehaviour {
 		Lab[,] LabArray = new Lab[rawLabArray.GetLength(0)/5, rawLabArray.GetLength(1)/5];
 		Debug.Log (rawLabArray.GetLength (0) + "  " + LabArray.GetLength (0));
 		//for every 5 by 5 box going from  column top to bottom then row left to right
-		for (int i = 0; i < rawLabArray.GetLength (0); i=i+5) 
+		for (int i = 0; i < rawLabArray.GetLength (0)-5; i=i+5) 
 		{
-			for (int j = 0; j < rawLabArray.GetLength (1); j=j+5) 
+			for (int j = 0; j < rawLabArray.GetLength (1)-5; j=j+5) 
 			{
 				Lab comps = new Lab(0,0,0); 
 				//for each box, 
