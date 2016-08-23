@@ -44,7 +44,8 @@ public class CharacterControllerScript : MonoBehaviour {
 */
 
 
-		if (Input.GetKeyDown(KeyCode.Space) && bucketAmount >= 25)
+		//if (Input.GetKeyDown(KeyCode.Space) && bucketAmount >= 25)
+		if (Input.touches.Length > 2 && bucketAmount >= 25)
 		{
 			GameObject splatter = (GameObject)Resources.Load("Splatter");
 			splatter.GetComponent<Splatter> ().color = bucketColor;
@@ -59,10 +60,24 @@ public class CharacterControllerScript : MonoBehaviour {
 
 		Color avgRGB = new Color (0, 0, 0);
 
-		if (!Input.GetKey (KeyCode.LeftControl)) {
-			float moveX = Input.GetAxis ("Horizontal");
-			float moveY = Input.GetAxis ("Vertical");
+		//if (!Input.GetKey (KeyCode.LeftControl)) {
+		
+			if (Input.touches.Length == 1) {
+			float moveX = 0;
+			float moveY = 0;
 
+			if (Input.touches [0].position.x > transform.position.x) {
+				moveX = 1;
+			}
+			if (Input.touches [0].position.y > transform.position.y) {
+				moveY = 1;
+			}	
+			if (Input.touches [0].position.x < transform.position.x) {
+				moveX = -1;
+			}	
+			if (Input.touches [0].position.y < transform.position.y) {
+				moveY = -1;
+			}	
 
 
 			if (splatters.Count == 0) {
