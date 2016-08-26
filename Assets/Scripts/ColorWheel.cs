@@ -13,7 +13,8 @@ public class ColorWheel : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetKey (KeyCode.LeftControl)) {
+		//if (Input.touches.Length == 2) {
+		if (Input.GetKey(KeyCode.LeftControl)) {
 			transform.localScale = new Vector2 (1, 1);
 		} else {
 			transform.localScale = new Vector2 (0, 0);
